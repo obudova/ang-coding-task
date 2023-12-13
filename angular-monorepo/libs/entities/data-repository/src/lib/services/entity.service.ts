@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { EntityDetails, EntityListItem, EntityType, EntityUpdateDto, GetEntityListParams, LocationStats } from "../model/model";
 import { Observable, of } from 'rxjs';
+import { EntityServiceInterface } from '../model/entity-service.interface';
 
 @Injectable()
-export class EntityService {
+export class EntityService implements EntityServiceInterface{
 
     getEntityList(getEntityListParams: GetEntityListParams): Observable<EntityListItem[]> {
         return of([]);

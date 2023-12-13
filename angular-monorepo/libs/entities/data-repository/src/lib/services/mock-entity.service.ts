@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Employee, EntityDetails, EntityListItem, EntityType, EntityUpdateDto, GetEntityListParams, LocationStats } from "../model/model";
 import { Observable, of } from 'rxjs';
+import { EntityServiceInterface } from '../model/entity-service.interface';
 
 @Injectable()
-export class MockEntityService {
+export class MockEntityService implements EntityServiceInterface {
 
     entities: EntityDetails[] = [
         {
