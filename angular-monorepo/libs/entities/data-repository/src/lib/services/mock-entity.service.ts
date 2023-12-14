@@ -1,6 +1,15 @@
 import { Injectable } from '@angular/core';
-import { Employee, EntityDetails, EntityListItem, EntityType, EntityUpdateDto, GetEntityListParams, LocationStats } from "../model/model";
-import { Observable, of } from 'rxjs';
+import {
+    Employee,
+    EmployeeVisits,
+    EntityDetails,
+    EntityListItem,
+    EntityType,
+    EntityUpdateDto,
+    GetEntityListParams,
+    LocationStats
+} from '../model/model';
+import { delay, Observable, of, throwError } from 'rxjs';
 import { EntityServiceInterface } from '../model/entity-service.interface';
 
 @Injectable()
@@ -99,41 +108,71 @@ export class MockEntityService implements EntityServiceInterface {
     ];
 
     getEntityList(getEntityListParams: GetEntityListParams): Observable<EntityListItem[]> {
-        return of([]);
+        return this.delayedResponse(of(this.entities));
     }
 
     getEntityDetails(entityId: string): Observable<EntityDetails> {
-        return of({
-            entityId: '',
-            trackingId: '',
-            name: '',
-            entityType: '',
-            entityStatus: '',
-            isActive: false,
-            attributes: [],
-        });
+        const entity = this.entities.find((e) => e.entityId === entityId) || this.emptyEnitity;
+        return this.delayedResponse(of(entity));
     }
 
+
     updateEntity(entityUpdateDto: EntityUpdateDto, entityId: string): Observable<EntityDetails> {
-        return of({
-            entityId: '',
-            trackingId: '',
-            name: '',
-            entityType: '',
-            entityStatus: '',
-            isActive: false,
-            attributes: [],
-        });
+        // Update the entity in the mock data
+        const updatedEntity = this.entities.find((e) => e.entityId === entityId) || this.emptyEnitity;
+        Object.assign(updatedEntity, entityUpdateDto);
+        return this.delayedResponse(of(updatedEntity));
     }
 
     getEntityTypes(): Observable<EntityType[]> {
-        return of([]);
+        return this.delayedResponse(of(this.entityTypes));
     }
 
     getLocationStats(): Observable<LocationStats> {
-        return of({
-            lastWeekLocationOccupancy: [],
-            lastWeekEmployeesVisits: [],
+        const locationStats: LocationStats = {
+            lastWeekLocationOccupancy: this.lastWeekLocationOccupancy,
+            lastWeekEmployeesVisits: this.getLastWeekEmployeesVisits(),
+        };
+        return this.delayedResponse(of(locationStats));
+    }
+
+    private getLastWeekEmployeesVisits(): EmployeeVisits[] {
+
+        const OccurrencesMap = new Map<string, number>();
+
+
+        this.lastWeekVisitsLog.forEach((employee) => {
+            const name = employee.name;
+
+            if (OccurrencesMap.has(name)) {
+                // Increment the count if the ID is already in the map
+                OccurrencesMap.set(name, OccurrencesMap.get(name)! + 1);
+            } else {
+                // Initialize the count if the ID is encountered for the first time
+                OccurrencesMap.set(name, 1);
+            }
         });
+
+        return [...OccurrencesMap].map(([name, visits]) => ({name, visits}));
+
+    }
+
+    get emptyEnitity(): EntityDetails {
+        return {
+            entityId: '',
+            trackingId: '',
+            name: '',
+            entityType: '',
+            entityStatus: '',
+            isActive: false,
+            attributes: [],
+        };
+    }
+
+    private delayedResponse<T>(obs: Observable<T>): Observable<T> {
+        const probability = Math.random();
+        const shouldError = probability <= 0.1; // 10% probability of error
+
+        return shouldError ? throwError(new Error('Simulated 403 Forbidden Error')) : obs.pipe(delay(1000))
     }
 }
