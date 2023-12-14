@@ -20,7 +20,7 @@
           "apps/location-app/src/assets"
         ],
         "styles": [
-          "apps/location-app/src/styles.scss",               
+          "apps/location-app/src/styles.scss",
           "./node_modules/primeng/resources/themes/lara-light-blue/theme.css",
           "./node_modules/primeng/resources/primeng.min.css",
           "./node_modules/primeicons/primeicons.css",
