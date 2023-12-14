@@ -1,3 +1,5 @@
+<input type="text" pInputText [formControl]="search"   />
+
 <ng-container *ngIf="entities$ | async as entities">
   <p-table [value]="entities">
     <ng-template pTemplate="header">

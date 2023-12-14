@@ -129,6 +129,12 @@ export class MockEntityService implements EntityServiceInterface {
   getEntityList(
     getEntityListParams: GetEntityListParams
   ): Observable<EntityListItem[]> {
+    const search = getEntityListParams?.search;
+    if (search) {
+     const filtered = this.entities.filter((item) => (item.trackingId?.toLowerCase() + item.name.toLowerCase()).includes(search))
+
+      return this.delayedResponse(of(filtered));
+    }
     return this.delayedResponse(of(this.entities));
   }
 
