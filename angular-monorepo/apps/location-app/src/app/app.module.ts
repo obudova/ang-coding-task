@@ -8,7 +8,16 @@ import { PanelMenuModule } from 'primeng/panelmenu';
 import { BadgeModule } from 'primeng/badge';
 import { AvatarGroupModule } from 'primeng/avatargroup';
 import { EntitiesFeatureHomepageModule } from '@angular-monorepo/entities/feature-homepage';
+import {
+  MockEntityService,
+  EntityService,
+} from '@angular-monorepo/entities/data-repository';
+import { USE_MOCK_SERVICE } from '../../service-config';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
+export function entityServiceFactory() {
+  return USE_MOCK_SERVICE ? new MockEntityService() : new EntityService();
+}
 @NgModule({
   declarations: [AppComponent],
   imports: [
@@ -18,9 +27,15 @@ import { EntitiesFeatureHomepageModule } from '@angular-monorepo/entities/featur
     BadgeModule,
     AvatarGroupModule,
     EntitiesFeatureHomepageModule,
+    BrowserAnimationsModule,
     RouterModule.forRoot(appRoutes, { initialNavigation: 'enabledBlocking' }),
   ],
-  providers: [],
+  providers: [
+    {
+      provide: 'ENTITY_SERVICE',
+      useFactory: entityServiceFactory,
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
