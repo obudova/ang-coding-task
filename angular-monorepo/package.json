@@ -17,6 +17,7 @@
     "@rx-angular/state": "^17.0.0",
     "highcharts": "^11.2.0",
     "leaflet": "^1.9.4",
+    "primeflex": "^3.3.1",
     "primeicons": "^6.0.1",
     "primeng": "^16.4.2",
     "rxjs": "~7.8.0",

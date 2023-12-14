@@ -1,0 +1,119 @@
+<div class="surface-card p-4 shadow-2 border-round m-5" *ngIf="entity">
+  <!--  <h3>{{ entity.name }}</h3>-->
+
+  <div class="surface-section">
+    <ul class="list-none p-0 m-0">
+      <li
+        class="flex align-items-center py-3 px-2 border-top-1 surface-border flex-wrap"
+      >
+        <div class="text-500 w-6 md:w-2 font-medium">Title</div>
+        <div class="text-900 w-full md:w-8 md:flex-order-0 flex-order-1">
+          {{ entity.name }}
+        </div>
+      </li>
+      <li
+        class="flex align-items-center py-3 px-2 border-top-1 surface-border flex-wrap"
+      >
+        <div class="text-500 w-6 md:w-2 font-medium">Attributes</div>
+        <div class="text-900 w-full md:w-8 md:flex-order-0 flex-order-1">
+          <p-chip
+            label="{{ attr }}"
+            class="mr-2"
+            *ngFor="let attr of entity.attributes"
+          ></p-chip>
+        </div>
+      </li>
+      <li
+        class="flex align-items-center py-3 px-2 border-top-1 surface-border flex-wrap"
+      >
+        <div class="text-500 w-6 md:w-2 font-medium">Tracking Id</div>
+        <div class="text-900 w-full md:w-8 md:flex-order-0 flex-order-1">
+          {{ entity.trackingId }}
+        </div>
+      </li>
+      <li
+        class="flex align-items-center py-3 px-2 border-top-1 surface-border flex-wrap"
+      >
+        <div class="text-500 w-6 md:w-2 font-medium">Type</div>
+        <div class="text-900 w-full md:w-8 md:flex-order-0 flex-order-1">
+          {{ entity.entityType }}
+        </div>
+      </li>
+      <li
+        class="flex align-items-center py-3 px-2 border-top-1 surface-border flex-wrap"
+      >
+        <div class="text-500 w-6 md:w-2 font-medium">Status</div>
+        <div class="text-900 w-full md:w-8 md:flex-order-0 flex-order-1">
+          {{ entity.entityStatus }}
+        </div>
+      </li>
+      <li
+        class="flex align-items-center py-3 px-2 border-top-1 surface-border flex-wrap"
+      >
+        <div class="text-500 w-6 md:w-2 font-medium">Active</div>
+        <div class="text-900 w-full md:w-8 md:flex-order-0 flex-order-1">
+          {{ entity.isActive }}
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <button
+    pButton
+    pRipple
+    label="Edit"
+    icon="pi pi-pencil"
+    class="p-button-text"
+    (click)="visible = true"
+  ></button>
+</div>
+
+<p-dialog
+  header="Edit employee {{ entity.entityId }}"
+  [(visible)]="visible"
+  [style]="{ width: '50vw', height: '50vh' }"
+>
+  <form [formGroup]="form">
+
+    <label for="name" class="block text-900 font-medium mb-2">Type</label>
+    <p-dropdown
+      [options]="(types$ | async) ?? []"
+      optionLabel="name"
+      optionValue="id"
+      [showClear]="true"
+      class="mb-3"
+      placeholder="Select a Type"
+      formControlName="entityType"
+    ></p-dropdown>
+
+    <label for="name" class="block text-900 font-medium mb-2 mt-2">Name</label>
+    <input
+      id="name"
+      type="text"
+      placeholder="Email address"
+      pInputText
+      class="w-full mb-3"
+      formControlName="name"
+    />
+
+    <label for="trackingId" class="block text-900 font-medium mb-2"
+      >Tracking id</label
+    >
+    <input
+      id="trackingId"
+      type="text"
+      placeholder="Password"
+      pInputText
+      class="w-full mb-3"
+      formControlName="trackingId"
+    />
+  </form>
+  <button
+    pButton
+    pRipple
+    label="Save"
+    icon="pi pi-save"
+    class="p-button-text"
+    (click)="handleEdit()"
+  ></button>
+</p-dialog>

@@ -28,7 +28,7 @@ export function entityServiceFactory() {
     AvatarGroupModule,
     EntitiesFeatureHomepageModule,
     BrowserAnimationsModule,
-    RouterModule.forRoot(appRoutes, { initialNavigation: 'enabledBlocking' }),
+    RouterModule.forRoot(appRoutes, { initialNavigation: 'enabledBlocking', bindToComponentInputs: true }),
   ],
   providers: [
     {

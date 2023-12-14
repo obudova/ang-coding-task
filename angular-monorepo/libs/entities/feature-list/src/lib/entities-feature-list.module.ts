@@ -21,7 +21,7 @@ const entitiesFeatureListRoutes: Route[] = [
     TableModule,
     InputTextModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
   declarations: [FeatureListComponent],
 })

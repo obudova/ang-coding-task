@@ -7,7 +7,6 @@ import { FormControl } from '@angular/forms';
 
 interface State extends GetEntityListParams {
   entities: EntityListItem[];
-
 }
 
 @Component({

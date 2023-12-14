@@ -15,6 +15,13 @@ export const appRoutes: Route[] = [
           import('@angular-monorepo/entities/feature-list').then(
             (m) => m.EntitiesFeatureListModule
           ),
+      },
+      {
+        path: ':id',
+        loadChildren: () =>
+          import('@angular-monorepo/entities/feature-details').then(
+            (m) => m.FeatureDetailsModule
+          ),
       }
     ],
   },

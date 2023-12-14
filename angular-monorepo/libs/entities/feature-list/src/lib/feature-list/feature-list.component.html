@@ -13,7 +13,7 @@
     </ng-template>
     <ng-template pTemplate="body" let-entity>
       <tr>
-        <td >{{ entity.name }}</td>
+        <td [routerLink]="['/entity', entity.entityId]">{{ entity.name }}</td>
         <td>{{ entity.trackingId }}</td>
         <td>{{ entity.entityType }}</td>
         <td>{{ entity.entityStatus }}</td>
