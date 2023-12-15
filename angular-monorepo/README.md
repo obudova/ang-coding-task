@@ -1,3 +1,14 @@
+### Olha comment
+
+- I tried to cover as much points as I can in short timeline
+- I used RXState library to handle state of the table
+- I didn't prioritise responsiveness, so wasn't checking it at all.
+- My assumption that API which I will receive from BE will be not throwing, so error handling was done only in one place. 
+- I didn't prioritize form validation, cz likely you will not impress investor with it :D
+
+Last three points I can add during weekend if needed.
+
+
 # Angular Coding Assignment
 The goal of this assignment is to test your coding style, ability to work with libraries/frameworks documentation and to develop features using Angular.
 
