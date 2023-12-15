@@ -1,8 +1,11 @@
 import { Component, Inject } from '@angular/core';
-import { EntityServiceInterface } from '@angular-monorepo/entities/data-repository';
-import { rxState, RxState } from '@rx-angular/state';
-import { EntityListItem, GetEntityListParams } from '../../../../data-repository/src/lib/model/model';
-import { catchError, debounceTime, endWith, finalize, map, of, startWith, switchMap, tap } from 'rxjs';
+import {
+  EntityListItem,
+  EntityServiceInterface,
+  GetEntityListParams
+} from '@angular-monorepo/entities/data-repository';
+import { rxState } from '@rx-angular/state';
+import { catchError, debounceTime, endWith, finalize, map, of, startWith, switchMap } from 'rxjs';
 import { FormControl } from '@angular/forms';
 
 interface State extends GetEntityListParams {
@@ -17,8 +20,6 @@ interface State extends GetEntityListParams {
   styleUrls: ['./feature-list.component.scss'],
 })
 export class FeatureListComponent {
-
-
   search: FormControl = new FormControl<string>('');
 
   _state = rxState<State>(({set, connect}) => {
@@ -48,7 +49,5 @@ export class FeatureListComponent {
   entities$ = this._state.select('entities');
   loading$  = this._state.select('loading');
 
-  constructor(@Inject('ENTITY_SERVICE') private entityService: EntityServiceInterface) {
-  }
-
+  constructor(@Inject('ENTITY_SERVICE') private entityService: EntityServiceInterface) {}
 }

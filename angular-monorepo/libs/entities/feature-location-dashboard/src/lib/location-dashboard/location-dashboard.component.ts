@@ -1,7 +1,7 @@
 import { Component, ElementRef, Inject, ViewChild } from '@angular/core';
 import * as Highcharts from 'highcharts';
 import { EntityServiceInterface } from '@angular-monorepo/entities/data-repository';
-import { EmployeeVisits } from '../../../../data-repository/src/lib/model/model';
+import { EmployeeVisits } from '@angular-monorepo/entities/data-repository';
 
 @Component({
   selector: 'angular-monorepo-location-dashboard',

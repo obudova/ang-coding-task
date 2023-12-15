@@ -1,6 +1,6 @@
 import { Component, Inject, Input, OnInit } from '@angular/core';
 import { EntityServiceInterface } from '@angular-monorepo/entities/data-repository';
-import { EntityDetails, EntityType, } from '../../../../data-repository/src/lib/model/model';
+import { EntityDetails, EntityType, } from '@angular-monorepo/entities/data-repository';
 import { catchError, finalize, Observable } from 'rxjs';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
