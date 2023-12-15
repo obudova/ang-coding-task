@@ -27,6 +27,7 @@ const entitiesFeatureDetailsRoutes: Route[] = [
     InputTextModule,
     DropdownModule,
     ReactiveFormsModule,
+    ProgressSpinnerModule,
   ],
   declarations: [EntityDetailsComponent],
 })

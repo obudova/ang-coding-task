@@ -199,8 +199,9 @@ export class MockEntityService implements EntityServiceInterface {
 
   private delayedResponse<T>(obs: Observable<T>): Observable<T> {
     const probability = Math.random();
-    const shouldError = probability <= 0.1; // 10% probability of error
-
+    // const shouldError = probability <= 0.1; // 10% probability of error
+    // const shouldError = probability < 0.1; // 10% probability of error
+    const shouldError = false; // we have ideal API for demo :0
     return shouldError
       ? throwError(new Error('Simulated 403 Forbidden Error'))
       : obs.pipe(delay(1000));

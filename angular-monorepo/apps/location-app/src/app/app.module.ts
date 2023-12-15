@@ -14,6 +14,8 @@ import {
 } from '@angular-monorepo/entities/data-repository';
 import { USE_MOCK_SERVICE } from '../../service-config';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MessageService } from 'primeng/api';
+import { ToastModule } from 'primeng/toast';
 
 export function entityServiceFactory() {
   return USE_MOCK_SERVICE ? new MockEntityService() : new EntityService();
@@ -28,13 +30,15 @@ export function entityServiceFactory() {
     AvatarGroupModule,
     EntitiesFeatureHomepageModule,
     BrowserAnimationsModule,
-    RouterModule.forRoot(appRoutes, { initialNavigation: 'enabledBlocking', bindToComponentInputs: true }),
+    RouterModule.forRoot(appRoutes, {initialNavigation: 'enabledBlocking', bindToComponentInputs: true}),
+    ToastModule,
   ],
   providers: [
     {
       provide: 'ENTITY_SERVICE',
       useFactory: entityServiceFactory,
     },
+    MessageService
   ],
   bootstrap: [AppComponent],
 })

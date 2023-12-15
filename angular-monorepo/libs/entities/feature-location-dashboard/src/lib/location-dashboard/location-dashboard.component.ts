@@ -11,6 +11,7 @@ import { EmployeeVisits } from '../../../../data-repository/src/lib/model/model'
 export class LocationDashboardComponent {
   @ViewChild('chartContainer') chartContainer!: ElementRef;
   @ViewChild('chartEmployee') chartEmployee!: ElementRef;
+  loading = true;
 
   constructor(@Inject('ENTITY_SERVICE') private entityService: EntityServiceInterface) {
     this.entityService.getLocationStats().subscribe((val) => {
@@ -55,6 +56,8 @@ export class LocationDashboardComponent {
         },
       ]
     });
+
+    this.loading = false
   }
 
   drawLocationVisits(locationVisits: number[]) {
@@ -75,11 +78,14 @@ export class LocationDashboardComponent {
         },
       },
       series: [{
-        name: 'Location 1',
+        name: 'Location Prokocim Szpital',
         type: 'line',
         data: locationVisits
       }]
     });
+
+    this.loading = false
+
   }
 
 }
