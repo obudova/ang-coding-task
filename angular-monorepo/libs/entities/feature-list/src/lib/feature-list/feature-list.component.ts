@@ -1,37 +1,54 @@
 import { Component, Inject } from '@angular/core';
 import { EntityServiceInterface } from '@angular-monorepo/entities/data-repository';
-import { RxState } from '@rx-angular/state';
+import { rxState, RxState } from '@rx-angular/state';
 import { EntityListItem, GetEntityListParams } from '../../../../data-repository/src/lib/model/model';
-import { debounceTime, switchMap } from 'rxjs';
+import { catchError, debounceTime, endWith, finalize, map, of, startWith, switchMap, tap } from 'rxjs';
 import { FormControl } from '@angular/forms';
 
 interface State extends GetEntityListParams {
   entities: EntityListItem[];
+  loading: boolean;
+  error: boolean
 }
 
 @Component({
   selector: 'angular-monorepo-feature-list',
   templateUrl: './feature-list.component.html',
   styleUrls: ['./feature-list.component.scss'],
-  providers: [RxState],
 })
 export class FeatureListComponent {
 
-  entities$ = this._state.select('entities');
 
   search: FormControl = new FormControl<string>('');
 
-  constructor(@Inject('ENTITY_SERVICE') private entityService: EntityServiceInterface,
-              private _state: RxState<State>) {
-
-    this._state.connect('entities', this.entityService.getEntityList(this._state.get()));
-    this._state.connect('search', this.search.valueChanges);
-
-    this._state.connect('entities', this._state.select('search').pipe(
+  _state = rxState<State>(({set, connect}) => {
+    set({loading: true});
+    connect(this.entityService.getEntityList({}).pipe(
+      map((entities) => ({ entities})),
+      catchError(() => of({ error: true })),
+      // start with loading true
+      startWith({ loading: true }),
+      // when request completes, we can set loading to false
+      endWith({ loading: false })
+    ));
+    connect(this.search.valueChanges.pipe(
+      map((search) => ({ search})),
       debounceTime(300),
-      switchMap((value) => {
-        return this.entityService.getEntityList({search: value?.trim()})
-      })), (state, newEntities) => (newEntities))
 
+      switchMap(({search}) => {
+        this._state.set({loading: true})
+        return this.entityService.getEntityList({search: search?.trim()}).pipe(
+          finalize(() => { this._state.set({loading: false})})
+        )
+      }),
+      map((entities) => ({entities})),
+    ))
+  })
+
+  entities$ = this._state.select('entities');
+  loading$  = this._state.select('loading');
+
+  constructor(@Inject('ENTITY_SERVICE') private entityService: EntityServiceInterface) {
   }
+
 }

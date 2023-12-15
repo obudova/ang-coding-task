@@ -6,6 +6,7 @@ import { TableModule } from 'primeng/table';
 import { InputTextModule } from 'primeng/inputtext';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 
 const entitiesFeatureListRoutes: Route[] = [
   {
@@ -24,6 +25,7 @@ const entitiesFeatureListRoutes: Route[] = [
     FormsModule,
     ReactiveFormsModule,
     ButtonModule,
+    ProgressSpinnerModule
   ],
   declarations: [FeatureListComponent],
 })
