@@ -5,6 +5,7 @@ import { catchError, finalize, Observable } from 'rxjs';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'angular-monorepo-entity-details',
@@ -43,6 +44,7 @@ export class EntityDetailsComponent implements OnInit {
     this.entityService
       .getEntityDetails(this.id)
       .pipe(
+        takeUntilDestroyed(),
         finalize(() => {
           this.loading = false;
         })
@@ -56,6 +58,7 @@ export class EntityDetailsComponent implements OnInit {
     this.entityService
       .updateEntity(this.form.value, this.id)
       .pipe(
+        takeUntilDestroyed(),
         catchError((e) => {
           this.messageService.add({
             severity: 'error',
