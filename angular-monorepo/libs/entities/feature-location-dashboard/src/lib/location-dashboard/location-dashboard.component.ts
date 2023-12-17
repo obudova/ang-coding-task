@@ -33,7 +33,7 @@ export class LocationDashboardComponent {
         categories: employeeVisits.map((employee)=> employee.name),
         crosshair: true,
         accessibility: {
-          description: 'Countries'
+          description: 'Last week location visits per employee'
         }
       },
       yAxis: {
@@ -51,7 +51,7 @@ export class LocationDashboardComponent {
       series: [
         {
           type: 'column',
-          name: 'Employee',
+          name: 'Employee visited (times)',
           data: employeeVisits.map(employee => employee.visits)
         },
       ]
@@ -74,7 +74,7 @@ export class LocationDashboardComponent {
       },
       yAxis: {
         title: {
-          text: 'Value'
+          text: 'Amount of Visits'
         },
       },
       series: [{
