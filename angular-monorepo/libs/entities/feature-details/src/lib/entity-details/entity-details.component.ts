@@ -1,4 +1,4 @@
-import { Component, Inject, Input, OnInit } from '@angular/core';
+import { Component, DestroyRef, inject, Inject, Input, OnInit } from '@angular/core';
 import { EntityServiceInterface } from '@angular-monorepo/entities/data-repository';
 import { EntityDetails, EntityType, } from '@angular-monorepo/entities/data-repository';
 import { catchError, finalize, Observable } from 'rxjs';
@@ -20,6 +20,7 @@ export class EntityDetailsComponent implements OnInit {
   entity: EntityDetails;
   visible = false;
   loading = true;
+  destroyRef = inject(DestroyRef)
 
   types$: Observable<EntityType[]> = this.entityService.getEntityTypes();
   form: FormGroup = this.fb.group({
@@ -44,7 +45,7 @@ export class EntityDetailsComponent implements OnInit {
     this.entityService
       .getEntityDetails(this.id)
       .pipe(
-        takeUntilDestroyed(),
+        takeUntilDestroyed(this.destroyRef),
         finalize(() => {
           this.loading = false;
         })
@@ -58,7 +59,7 @@ export class EntityDetailsComponent implements OnInit {
     this.entityService
       .updateEntity(this.form.value, this.id)
       .pipe(
-        takeUntilDestroyed(),
+        takeUntilDestroyed(this.destroyRef),
         catchError((e) => {
           this.messageService.add({
             severity: 'error',
