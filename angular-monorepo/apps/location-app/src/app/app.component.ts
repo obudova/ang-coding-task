@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { Event, NavigationStart, Router } from '@angular/router';
+import { filter, Subscription } from 'rxjs';
 
 @Component({
   selector: 'angular-monorepo-root',
@@ -7,6 +9,8 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'location-app';
+  sidebarVisible = false;
+  routerSub: Subscription;
 
   items = [
     {
@@ -37,4 +41,21 @@ export class AppComponent {
       ],
     },
   ];
+
+  constructor(private router: Router) { }
+
+  openSidebar() {
+    this.sidebarVisible = true;
+    this.routerSub = this.router.events.pipe(
+      filter((e: Event  ): e is NavigationStart => e instanceof NavigationStart)
+    ).subscribe((e: Event) => {
+      this.closeSidebar();
+    });
+  }
+
+  closeSidebar() {
+    console.log('close')
+    this.sidebarVisible = false;
+    this.routerSub.unsubscribe();
+  }
 }

@@ -9,15 +9,17 @@ import { BadgeModule } from 'primeng/badge';
 import { AvatarGroupModule } from 'primeng/avatargroup';
 import { EntitiesFeatureHomepageModule } from '@angular-monorepo/entities/feature-homepage';
 import {
-  MockEntityService,
   EntityService,
+  EntityServiceInterface,
+  MockEntityService,
 } from '@angular-monorepo/entities/data-repository';
 import { USE_MOCK_SERVICE } from '../../service-config';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
+import { SidebarModule } from 'primeng/sidebar';
 
-export function entityServiceFactory() {
+export function entityServiceFactory(): EntityServiceInterface {
   return USE_MOCK_SERVICE ? new MockEntityService() : new EntityService();
 }
 @NgModule({
@@ -30,15 +32,19 @@ export function entityServiceFactory() {
     AvatarGroupModule,
     EntitiesFeatureHomepageModule,
     BrowserAnimationsModule,
-    RouterModule.forRoot(appRoutes, {initialNavigation: 'enabledBlocking', bindToComponentInputs: true}),
+    RouterModule.forRoot(appRoutes, {
+      initialNavigation: 'enabledBlocking',
+      bindToComponentInputs: true,
+    }),
     ToastModule,
+    SidebarModule,
   ],
   providers: [
     {
       provide: 'ENTITY_SERVICE',
       useFactory: entityServiceFactory,
     },
-    MessageService
+    MessageService,
   ],
   bootstrap: [AppComponent],
 })

@@ -1,5 +1,8 @@
 <div class="app-container">
   <div class="header">
+    <div class="icon  md:hidden" (click)="openSidebar()">
+      <i class="pi pi-align-justify"></i>
+    </div>
     <h2>Great Location App</h2>
     <div>
       <p-avatar
@@ -12,8 +15,8 @@
     </div>
   </div>
   <div class="main-container">
-    <div class="menu-container">
-      <p-panelMenu [model]="items"></p-panelMenu>
+    <div class="menu-container hidden md:block">
+      <ng-container *ngTemplateOutlet="panelRef"></ng-container>
     </div>
     <div>
       <router-outlet></router-outlet>
@@ -21,3 +24,10 @@
   </div>
 </div>
 <p-toast position="bottom-center"></p-toast>
+
+<p-sidebar [(visible)]="sidebarVisible" (onHide)="closeSidebar()">
+  <ng-container *ngTemplateOutlet="panelRef"></ng-container>
+</p-sidebar>
+<ng-template #panelRef>
+  <p-panelMenu [model]="items"></p-panelMenu>
+</ng-template>
