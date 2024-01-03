@@ -18,7 +18,7 @@ export class EntityDetailsComponent implements OnInit {
   id: string;
 
   entity: EntityDetails;
-  visible = false;
+  visibleModal = false;
   loading = true;
   destroyRef = inject(DestroyRef)
 
@@ -71,7 +71,7 @@ export class EntityDetailsComponent implements OnInit {
       )
       .subscribe(
         (val) => {
-          this.visible = false;
+          this.visibleModal = false;
           this.messageService.add({
             severity: 'success',
             summary: 'Employee was updated',

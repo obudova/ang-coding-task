@@ -69,12 +69,12 @@
       label="Edit"
       icon="pi pi-pencil"
       class="p-button-text"
-      (click)="visible = true"
+      (click)="visibleModal = true"
     ></button>
 
     <p-dialog
       header="Edit employee {{ entity.entityId }}"
-      [(visible)]="visible"
+      [(visible)]="visibleModal"
       [style]="{ width: '50vw', height: '50vh' }"
     >
       <form [formGroup]="form">
